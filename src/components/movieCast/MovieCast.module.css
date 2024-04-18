@@ -1,0 +1,9 @@
+.cast-item {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+}
+
+.cast {
+  margin-bottom: 10px;
+}
