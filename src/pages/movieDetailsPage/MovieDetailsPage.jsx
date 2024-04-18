@@ -5,7 +5,7 @@ import {
   useParams,
   useLocation,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { fetchDetailsMovie } from "../../movie-api";
 import css from "./MovieDetailsPage.module.css";
 
@@ -13,6 +13,7 @@ const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState([]);
   const { movieId } = useParams();
   const location = useLocation();
+  const locationStateRef = useRef(location.state);
 
   useEffect(() => {
     async function fetchDetail() {
@@ -31,7 +32,8 @@ const MovieDetailsPage = () => {
 
   const imgUrl = `https://image.tmdb.org/t/p/w500/${backdrop_path}`;
 
-  const backLinkHref = location.state ?? "/movies";
+  const backLinkHref = locationStateRef.current ?? "/movies";
+
   return (
     <section className={css["section-detail"]}>
       <div>
@@ -59,12 +61,12 @@ const MovieDetailsPage = () => {
         <p>Additional information</p>
         <ul className={css.additional}>
           <li>
-            <Link to="cast" state={location.state}>
+            <Link to="cast" state={locationStateRef.current}>
               Cast
             </Link>
           </li>
           <li>
-            <Link to="reviews" state={location.state}>
+            <Link to="reviews" state={locationStateRef.current}>
               Reviews
             </Link>
           </li>

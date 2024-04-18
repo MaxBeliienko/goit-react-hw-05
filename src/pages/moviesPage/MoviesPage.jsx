@@ -1,24 +1,25 @@
 import { fetchSearchMovie } from "../../movie-api";
 import MovieList from "../../components/movieList/MovieList";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const MoviesPage = () => {
-  const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("query");
 
   useEffect(() => {
+    if (!searchQuery) return;
     async function fetchSearch() {
       try {
-        const dataSearch = await fetchSearchMovie(searchValue);
+        const dataSearch = await fetchSearchMovie(searchQuery);
         setSearchData(dataSearch);
       } catch (error) {
         console.log(error);
       }
     }
     fetchSearch();
-  }, [searchValue]);
+  }, [searchQuery]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ const MoviesPage = () => {
         "Input field cannot be empty! Please enter a value for the search🙂"
       );
     }
-    setSearchValue(inputValue);
+    setSearchParams({ query: inputValue });
     form.reset();
   };
   return (

@@ -16,7 +16,7 @@ const MovieReviews = () => {
       }
     }
     reviewsFatch();
-  }, []);
+  }, [movieId]);
   return (
     <>
       {reviews.length > 0 ? (

@@ -17,7 +17,7 @@ const MovieCast = () => {
       }
     }
     castFetch();
-  }, []);
+  }, [movieId]);
   return (
     <ul>
       {movieCast.map((cast) => {
